@@ -1,0 +1,95 @@
+/* Dracula color palette */
+:root {
+  --dracula-bg: #282a36;
+  --dracula-fg: #f8f8f2;
+  --dracula-accent: #bd93f9;
+  --dracula-input: #44475a;
+  --dracula-msg-left: #6272a4;
+  --dracula-msg-right: #50fa7b;
+}
+
+body {
+  font-family: 'fira-code';
+}
+
+body.bg-dracula {
+  background-color: var(--dracula-bg);
+  color: var(--dracula-fg);
+}
+
+.login-card {
+  background-color: var(--dracula-input);
+  border-radius: 10px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.text-accent {
+  color: var(--dracula-accent);
+}
+
+.btn-accent {
+  background-color: var(--dracula-accent);
+  color: #fff;
+  border: none;
+}
+
+.btn-accent:hover {
+  background-color: #a573f7;
+}
+
+body.bg-dracula {
+  background-color: var(--dracula-bg);
+  color: var(--dracula-fg);
+}
+
+.chat-message {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.chat-message.left {
+  justify-content: flex-start;
+}
+
+.chat-message.right {
+  justify-content: flex-end;
+}
+
+.message {
+  max-width: 70%;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+}
+
+.bg-response {
+  background-color: var(--dracula-msg-left);
+  color: white;
+  border-top-left-radius: 0;
+}
+
+.bg-sender {
+  background-color: var(--dracula-msg-right);
+  color: #111;
+  border-top-right-radius: 0;
+}
+
+.chat-input {
+  position: sticky;
+  bottom: 0;
+}
+
+.btn-accent {
+  background-color: var(--dracula-accent);
+  color: #fff;
+}
+
+.btn-accent:hover {
+  background-color: #a573f7;
+}
+
+.chat-container {
+  height: 90vh;
+}

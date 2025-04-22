@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid chat-container overflow-auto px-3 py-4" id="chatWindow">
+	<div class="chat-message left">
+    	<div class="message bg-response">Hello! How can I help you today?</div>
+    </div>
+    
+</div>
+
+<div class="chat-input bg-dracula p-3">
+	<div class="input-group">
+    	<input type="text" id="cmdText" class="form-control bg-dark border-0 text-light" placeholder="Type a message...">
+    	<button class="btn btn-accent" id="cmdSend" type="submit">Send</button>
+	</div>
+</div>
+
+<script>
+	$('#cmdSend').click(function() {
+		submitCmd();
+	});
+
+	$('#cmdText').keypress(function(k) {
+		if (k.which == 13 && $('#cmdText').val() != "") {
+			submitCmd();
+		}
+	})
+
+	function submitCmd() {
+		var text = $('#cmdText').val();
+		$('#cmdText').val('');
+
+		var chatWindow = $('#chatWindow')
+		chatWindow.append(`
+		<div class="chat-message right">
+    		<div class="message bg-sender">${text}</div>
+    	</div>
+		`);
+	}
+</script>
+{% endblock %}
