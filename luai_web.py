@@ -2,13 +2,24 @@ from functools import wraps
 from flask import Flask, flash, jsonify, redirect, render_template, request, url_for, session
 import os
 
+from sqlalchemy import asc, select
+from db import db
+
 from dotenv import load_dotenv
+
+from models.chat import Chat
 
 load_dotenv()
 
 app = Flask(__name__)
 
 app.secret_key = os.getenv("SECRET_KEY")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///luai_web.db"
+
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 API_KEY = os.getenv("API_KEY")
 
@@ -41,7 +52,23 @@ def auth_required(func):
 @auth_required
 @app.route("/")
 def index():
-	return render_template("index.html")
+	chats = db.session.query(Chat).order_by(asc(Chat.id)).all()
+	return render_template("index.html", chats=chats)
+
+
+@auth_required
+@app.post('/send_message')
+def send_message():
+	message = request.form.get("message")
+	message = message.strip()
+	if message == None or message == "":
+		return jsonify(), 500
+	
+	chat = Chat(message=message, sender="user")
+	db.session.add(chat)
+	db.session.commit()
+	return jsonify(), 200
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
