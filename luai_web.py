@@ -2,7 +2,7 @@ from functools import wraps
 from flask import Flask, flash, jsonify, redirect, render_template, request, url_for, session
 import os
 
-from sqlalchemy import asc, select
+from sqlalchemy import asc, desc, select
 from db import db
 
 from dotenv import load_dotenv
@@ -72,7 +72,7 @@ def send_message():
 @api_key_required
 @app.route("/get_message")
 def get_message():
-	chat = db.session.scalars(select(Chat).where(Chat.sender == "user")).first()
+	chat = db.session.scalars(select(Chat).where(Chat.sender == "user").order_by(desc(Chat.id))).first()
 	if chat is None:
 		return jsonify(), 404
 
