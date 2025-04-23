@@ -13,6 +13,7 @@
 			</div>
 		{% endif %}
 	{% endfor %}
+	<div id="bottom-anchor"></div>
 </div>
 <div class="chat-input bg-dracula p-3">
 	<div class="input-group">
@@ -22,6 +23,10 @@
 </div>
 
 <script>
+	window.onload = function() {
+		document.getElementById('bottom-anchor').scrollIntoView();
+    };
+
 	$('#cmdSend').click(function() {
 		submitCmd();
 	});
@@ -46,6 +51,7 @@
     				<div class="message bg-sender">${text}</div>
     			</div>
 			`);
+			document.getElementById('bottom-anchor').scrollIntoView({behavior: "smooth"});
 		});
 
 		
