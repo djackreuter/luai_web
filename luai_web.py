@@ -30,8 +30,6 @@ def api_key_required(func):
 			api_key = request.headers.get('Authorization').split(' ')[1]
 			if api_key == API_KEY:
 				return func(*args, **kwargs)
-			else:
-				return jsonify({"error": "API key is not valid"}), 401
 		else:
 			return jsonify({"error": "Unauthorized"}), 401
 	return check_authorization
@@ -52,7 +50,8 @@ def auth_required(func):
 @auth_required
 @app.route("/")
 def index():
-	chats = db.session.query(Chat).order_by(asc(Chat.id)).all()
+	chats = db.session.query(Chat).all()
+	#chats = db.session.query(Chat).order_by(asc(Chat.id)).all()
 	return render_template("index.html", chats=chats)
 
 
@@ -65,6 +64,27 @@ def send_message():
 		return jsonify(), 500
 	
 	chat = Chat(message=message, sender="user")
+	db.session.add(chat)
+	db.session.commit()
+	return jsonify(), 200
+
+
+@api_key_required
+@app.route("/get_message")
+def get_message():
+	chat = db.session.scalars(select(Chat).where(Chat.sender == "user")).first()
+	if chat is None:
+		return jsonify(), 404
+
+	return jsonify({ "message": chat.message }), 200
+
+@api_key_required
+@app.post("/reply")
+def reply():
+	data = request.get_json()
+	message = data["message"]
+	print(f"Attempts: {data["attempts"]}")
+	chat = Chat(message=message, sender="system")
 	db.session.add(chat)
 	db.session.commit()
 	return jsonify(), 200

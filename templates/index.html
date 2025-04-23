@@ -5,7 +5,7 @@
 	{% for chat in chats %}
 		{% if chat.sender == 'system' %}
 				<div class="chat-message left">
-					<div class="message bg-response">{{ chat.message }}</div>
+					<div class="message bg-response"><pre>{{ chat.message }}</pre></div>
 				</div>
 		{% elif chat.sender == 'user' %}
 			<div class="chat-message right">
