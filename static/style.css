@@ -10,6 +10,11 @@
 
 body {
   font-family: 'fira-code';
+  background-image: url('./images/luai_background.png');
+  background-size: cover;
+  background-repeat: no-repeat; 
+  height: 100vh;
+  background-blend-mode: soft-light;
 }
 
 body.bg-dracula {
