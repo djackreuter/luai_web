@@ -34,7 +34,7 @@ body.bg-dracula {
 }
 
 .btn-accent {
-  background-color: var(--dracula-accent);
+  background-color: rgb(0, 122, 255);
   color: #fff;
   border: none;
 }
@@ -70,14 +70,14 @@ body.bg-dracula {
 }
 
 .bg-response {
-  background-color: var(--dracula-msg-left);
+  background-color: rgb(101, 26, 31);
   color: white;
   border-top-left-radius: 0;
 }
 
 .bg-sender {
-  background-color: var(--dracula-msg-right);
-  color: #111;
+  background-color: rgb(0, 122, 255);
+  color: white;
   border-top-right-radius: 0;
 }
 
@@ -86,13 +86,8 @@ body.bg-dracula {
   bottom: 0;
 }
 
-.btn-accent {
-  background-color: var(--dracula-accent);
-  color: #fff;
-}
-
 .btn-accent:hover {
-  background-color: #a573f7;
+  background-color: rgb(101, 26, 31);
 }
 
 .chat-container {
