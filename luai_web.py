@@ -1,6 +1,7 @@
 from functools import wraps
 from flask import Flask, flash, jsonify, redirect, render_template, request, url_for, session
 import os
+import time
 
 from sqlalchemy import asc, desc, select
 from db import db
@@ -66,7 +67,16 @@ def send_message():
 	chat = Chat(message=message, sender="user")
 	db.session.add(chat)
 	db.session.commit()
-	return jsonify(), 200
+
+	while True:
+		time.sleep(15)
+		last_message = get_last_message()
+		if last_message.sender == "system":
+			return jsonify({"message": last_message.message}), 200
+
+def get_last_message():
+	last_message = db.session.scalars(select(Chat).order_by(desc(Chat.id))).first()
+	return last_message
 
 
 @api_key_required

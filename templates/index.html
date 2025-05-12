@@ -41,15 +41,22 @@
 		var text = $('#cmdText').val();
 		$('#cmdText').val('');
 
-		$.post('/send_message', {
-			"message": text
-		},
-		function(data, status) {
-			var chatWindow = $('#chatWindow');
+		var chatWindow = $('#chatWindow');
 			chatWindow.append(`
 				<div class="chat-message right">
     				<div class="message bg-sender">${text}</div>
     			</div>
+			`);
+		document.getElementById('bottom-anchor').scrollIntoView({behavior: "smooth"});
+
+		$.post('/send_message', {
+			"message": text
+		},
+		function(data, status) {
+			chatWindow.append(`
+				<div class="chat-message left">
+					<div class="message bg-sender"><pre>${data.message}</pre></div>
+				</div>
 			`);
 			document.getElementById('bottom-anchor').scrollIntoView({behavior: "smooth"});
 		});
