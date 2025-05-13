@@ -55,7 +55,7 @@
 		function(data, status) {
 			chatWindow.append(`
 				<div class="chat-message left">
-					<div class="message bg-sender"><pre>${data.message}</pre></div>
+					<div class="message bg-response"><pre>${data.message}</pre></div>
 				</div>
 			`);
 			document.getElementById('bottom-anchor').scrollIntoView({behavior: "smooth"});
