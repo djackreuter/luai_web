@@ -93,3 +93,9 @@ body.bg-dracula {
 .chat-container {
   height: 90vh;
 }
+
+#deleteChats {
+  position: sticky;
+  left: 92vw;
+  margin-bottom: 1rem;
+}

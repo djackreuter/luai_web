@@ -74,9 +74,18 @@ def send_message():
 		if last_message.sender == "system":
 			return jsonify({"message": last_message.message}), 200
 
+
 def get_last_message():
 	last_message = db.session.scalars(select(Chat).order_by(desc(Chat.id))).first()
 	return last_message
+
+
+@auth_required
+@app.post("/delete_chats")
+def delete_chats():
+	db.session.query(Chat).delete()
+	db.session.commit()
+	return jsonify(), 200
 
 
 @api_key_required

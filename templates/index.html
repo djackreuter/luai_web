@@ -2,6 +2,12 @@
 
 {% block content %}
 <div class="container-fluid chat-container overflow-auto px-3 py-4" id="chatWindow">
+	<div class="row">
+		<div class="col">
+			<button id="deleteChats" type="button" class="btn btn-danger">Clear Chats</button>
+		</div>
+	</div>
+	
 	{% for chat in chats %}
 		{% if chat.sender == 'system' %}
 				<div class="chat-message left">
@@ -60,8 +66,12 @@
 			`);
 			document.getElementById('bottom-anchor').scrollIntoView({behavior: "smooth"});
 		});
-
-		
 	}
+
+	$("#deleteChats").click(function() {
+		$.post("/delete_chats", function() {
+			$(".chat-message").remove();
+		});
+	});
 </script>
 {% endblock %}
