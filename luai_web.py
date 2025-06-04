@@ -38,8 +38,8 @@ def api_key_required(func):
 def auth_required(func):
 	@wraps(func)
 	def check_session(*args, **kwargs):
-		if session["username"] is not None:
-			user = session["username"]
+		if session.get("username") is not None:
+			user = session.get("username")
 			if user == os.getenv("LUAI_USERNAME"):
 				return func(*args, **kwargs)
 			else:
@@ -48,16 +48,16 @@ def auth_required(func):
 			return redirect(url_for("login")), 302
 	return check_session
 
-@auth_required
 @app.route("/")
+@auth_required
 def index():
 	chats = db.session.query(Chat).all()
 	#chats = db.session.query(Chat).order_by(asc(Chat.id)).all()
 	return render_template("index.html", chats=chats)
 
 
-@auth_required
 @app.post('/send_message')
+@auth_required
 def send_message():
 	message = request.form.get("message")
 	message = message.strip()
@@ -80,16 +80,16 @@ def get_last_message():
 	return last_message
 
 
-@auth_required
 @app.post("/delete_chats")
+@auth_required
 def delete_chats():
 	db.session.query(Chat).delete()
 	db.session.commit()
 	return jsonify(), 200
 
 
-@api_key_required
 @app.route("/get_message")
+@api_key_required
 def get_message():
 	chat = db.session.scalars(select(Chat).where(Chat.sender == "user").order_by(desc(Chat.id))).first()
 	if chat is None:
@@ -97,8 +97,8 @@ def get_message():
 
 	return jsonify({ "message": chat.message }), 200
 
-@api_key_required
 @app.post("/reply")
+@api_key_required
 def reply():
 	data = request.get_json()
 	message = data["message"]
